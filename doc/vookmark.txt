@@ -1,0 +1,197 @@
+*vookmark.txt*   Vookmark, Vim bookmark plugin.
+*vookmark*
+                              Reference Manual~
+
+==============================================================================
+CONTENTS                                                  *vookmark_contents*
+
+    1.Intro........................................|vookmark_intro|
+    2.Options......................................|vookmark_options|
+        2.1 g:vookmark_savepath....................|vookmark_savepath|
+        2.2 g:vookmark_mapkeys.....................|vookmark_mapkeys|
+    3.Commands.....................................|vookmark_commands|
+    4.Keys.........................................|vookmark_keys|
+        4.1 Default key maps.......................|vookmark_default_keys|
+        4.2 Recommend key maps.....................|vookmark_recommend_keys|
+    5.Bugs.........................................|vookmark_bugs|
+    6.Changelog....................................|vookmark_changelog|
+    7.License......................................|vookmark_license|
+
+==============================================================================
+1. Intro                                                     *vookmark_intro*
+
+Vookmark is a Vim plugin for bookmark feature.
+
+It does not use Vim builtin bookmark feature (mx then 'x), but using sign and
+persistent storage to record your bookmarks.
+
+Unlike Vim builtin bookmark feature, Vookmark can record unlimited bookmarks
+for each file you opened. It is much easier to find next nearest bookmark, no
+need to remember the bookmark identifier.  It also provides visual highlight
+bookmark effect. More over, there is a bookmark list window to show all
+bookmarks in one place.
+
+Take a look at the github website, for the latest information of Vookmark.
+
+    https://github.com/t16ing/vim-vookmark
+
+==============================================================================
+2. Options                                                 *vookmark_options*
+
+------------------------------------------------------------------------------
+2.1 g:vookmark_savepath                                   *vookmark_savepath*
+
+The persistent file to save all your bookmarks.
+
+You can change it in your .vimrc. For example: >
+    let g:vookmark_savepath=$HOME.'.vim/vookmark'
+<
+
+Default: $HOME.'/.vookmark'
+
+------------------------------------------------------------------------------
+2.2 g:vookmark_mapkeys                                     *vookmark_mapkeys*
+
+Vookmark will maps hotkeys while the plugin is loaded.
+
+The example in .vimrc to disable Vookmark key mapping: >
+    let g:vookmark_mapkeys=0
+<
+
+Default: 1
+
+==============================================================================
+3. Commands                                               *vookmark_commands*
+
+:VmkToggle                                                       *:VmkToggle*
+
+To add bookmark or remove bookmark cursor line.
+
+:VmkNext                                                           *:VmkNext*
+
+Move to next nearest bookmark. If no bookmarks found till end of file, move
+to first bookmark.
+
+:VmkPrev                                                           *:VmkPrev*
+
+Move to previous nearest bookmark. If no bookmarks found till begin of file,
+move to last bookmark.
+
+:VmkClear                                                         *:VmkClear*
+
+Clear all bookmarks in current file.
+
+:VmkSave                                                           *:VmkSave*
+
+Manually save bookmarks into persistent storage. Note that Vookmark will
+automatically save bookmarks while Vim is closed.
+
+:VmkLoad                                                           *:VmkLoad*
+
+Manually load bookmarks from persistent storage. Note that Vookmark will
+automatically load bookmarks while Vim starts.
+
+:VmkList                                                           *:VmkList*
+
+Open a bookmark list window to show all bookmarks in current file.
+
+:VmkRefresh                                                     *:VmkRefresh*
+
+If Vookmark do not sync sign and bookmarks well, the visual highlight
+bookmark effect may not reflect to actual bookmark location. This command
+will force to sync sign and bookmark. This operation will automatically be
+done while signs/bookmarks are changed.
+
+:VmkFactoryReset                                           *:VmkFactoryReset*
+
+Be careful to use this command. It will erase all bookmarks for every file
+you ever edit. No change to undo this operation, unless you have backup the
+persistent bookmark database file manually.
+
+==============================================================================
+4. Keys                                                       *vookmark_keys*
+
+Vookmark will automatically maps some hotkeys and it assumes you never need
+Vim builtin bookmark feature any more.
+
+Therefore, only hotkeys staring with 'm' and follows a lower case alphabet
+will be used by Vookmark.
+
+If this is still not what you expected, please consider changing this
+behavior by |vookmark_mapkeys|.
+
+------------------------------------------------------------------------------
+4.1 Default key maps                                 *vookmark_default_keys*
+
+All key maps are only mapped for normal mode.
+
+	Mapping           | Details
+	------------------|----------------------------------------------
+	mm                | Maps to |:VmkToggle|
+	mn                | Maps to |:VmkNext|
+	mp                | Maps to |:VmkPrev|
+	ma                | Maps to |:VmkClear|
+	ml                | Maps to |:VmkList|
+	mr                | Maps to |:VmkRefresh|
+
+------------------------------------------------------------------------------
+4.2 Recommend key maps                              *vookmark_recommend_keys*
+
+You can define the function key (like: 'f2') mapping to move to
+nearest next bookmark. So that you can keep pressing <F2> to moving
+to next bookmark.
+
+Example: >
+    map <f2> <ESC>:VmkNext<CR>
+    map <leader><f2> <ESC>:VmkPrev<CR>
+<
+
+==============================================================================
+5. Bugs                                                       *vookmark_bugs*
+
+I also use Tabbar (one of my favorite plugin). I found while I only edit one
+file (in the meanwhile Tabbar is hidden), and then I try to open bookmark list
+window, the Tabbar may become visible but improper windows size and hard to
+recover.  Looks like the Tabbar and Vookmark are creating window
+simultaneously and cause some problems.
+
+To avoid bug to crush Tabbar window, I add one option in my .vimrc as a
+temporary solution: >
+    let g:Tb_MoreThanOne = 1
+<
+
+It makes the Tabbar always shows on the screen. Therefore the problems do not
+happen to me again.
+
+Fixing the bug is part of todos but not the highest priority. If some bugs
+happen to you and annoy you very much, please submit a issue report on the
+website.
+
+Issue report website:
+
+	https://github.com/t16ing/vim-vookmark/issues.
+
+==============================================================================
+6. Changelog                                             *vookmark_changelog*
+
+v1.0.2
+    * New bookmark list window function keys.
+	1. 'r' for relocate bookmark position.
+	2. 'd' for deleting bookmark.
+    * Minor and potential bug fixes.
+v1.0.1
+    * Add README.md and vookmark.txt (vim help file).
+    * New command 'VmkFactoryReset', to reset Vookmark plugin.
+    * New options 'g:vookmark_mapkeys', to decide mapping keys or not.
+    * Minor and potential bug fixes.
+v1.0.0
+    * Initial release.
+
+==============================================================================
+7. License                                                 *vookmark_license*
+
+See https://github.com/t16ing/vim_vookmark/blob/master/LICENSE.
+
+==============================================================================
+
+vim:tw=78:sw=4:ft=help:norl:
