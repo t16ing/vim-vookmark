@@ -494,7 +494,7 @@ function! s:VookmarkList_Exit()
 endfunction
 
 function! s:VookmarkList_LineNumber()
-	if line('.') <= 2
+	if line('.') <= 1
 		return -1
 	endif
 
@@ -578,8 +578,7 @@ endfunction
 function! s:VookmarkList_Refresh()
 	" prepare bookmark list content, in z register
 	let l:oldz=@z
-	let @z="File: ".b:original_file."\n"
-	let @z.="\" (q)uit (r)elocate (d)elete, '<cr>' to confirm selection.\n"
+	let @z="\" (q)uit (r)elocate (d)elete, '<cr>' to confirm selection.\n"
 
 	let l:original_file=b:original_file
 	let l:bookmarklist_bufnr=b:bookmarklist_bufnr
