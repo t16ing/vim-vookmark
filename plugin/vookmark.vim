@@ -600,7 +600,7 @@ function! s:VookmarkList_Refresh()
 	normal! ggVG
 	normal! dd
 	normal! "zPGdd
-	execute "3,$:sort n"
+	execute "2,$:sort n"
 	normal! gg
 	execute "resize ".min([line("$"),12])
 	set nomodified
